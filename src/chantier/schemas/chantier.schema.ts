@@ -15,29 +15,28 @@ export class Chantier extends Document {
   @Prop()
   endDate: Date;
 
-   @Prop()
+  @Prop()
   note: string;
 
- @Prop({
-  type: [
-    {
-      personnel: { type: Types.ObjectId, ref: 'Personnel' }, // singular, matching TypeScript type
-      date: Date,
-    },
-  ],
-})
-personnelAssignments: { personnel: Types.ObjectId; date: Date }[];
+  @Prop({
+    type: [
+      {
+        personnel: { type: Types.ObjectId, ref: 'Personnel' }, // singular, matching TypeScript type
+        date: Date,
+      },
+    ],
+  })
+  personnelAssignments: { personnel: Types.ObjectId; date: Date }[];
 
-@Prop({
-  type: [
-    {
-      vehicule: { type: Types.ObjectId, ref: 'Vehicule' },
-      date: Date,
-    },
-  ],
-})
-vehiculeAssignments: { vehicule: Types.ObjectId; date: Date }[];
-
+  @Prop({
+    type: [
+      {
+        vehicule: { type: Types.ObjectId, ref: 'Vehicule' },
+        date: Date,
+      },
+    ],
+  })
+  vehiculeAssignments: { vehicule: Types.ObjectId; date: Date }[];
 }
 
 export const ChantierSchema = SchemaFactory.createForClass(Chantier);

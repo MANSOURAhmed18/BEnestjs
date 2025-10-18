@@ -5,7 +5,11 @@ import { PersonnelController } from './personnel.controller';
 import { Personnel, PersonnelSchema } from './schemas/personnel.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Personnel.name, schema: PersonnelSchema }])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: Personnel.name, schema: PersonnelSchema },
+    ]),
+  ],
   controllers: [PersonnelController],
   providers: [PersonnelService],
   exports: [PersonnelService],

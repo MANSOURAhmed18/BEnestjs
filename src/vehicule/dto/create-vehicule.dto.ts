@@ -1,4 +1,3 @@
-
 export class CreateVehiculeDto {
   readonly immatriculation: string;
   readonly marque?: string;

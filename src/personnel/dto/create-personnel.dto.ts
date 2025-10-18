@@ -1,4 +1,3 @@
-
 export class CreatePersonnelDto {
   readonly name: string;
   readonly role?: string;

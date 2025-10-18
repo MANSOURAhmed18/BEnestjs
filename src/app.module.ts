@@ -5,7 +5,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ChantierModule } from './chantier/chantier.module';
 import { VehiculeModule } from './vehicule/vehicule.module';
 import { PersonnelModule } from './personnel/personnel.module';
-
+import { StockModule } from './stock/stock.module';
+import { FournisseurModule } from './fournisseur/fournisseur.module';
+import { GazoileModule } from './gazoile/gazoile.module';
 
 @Module({
   imports: [
@@ -13,6 +15,9 @@ import { PersonnelModule } from './personnel/personnel.module';
     ChantierModule,
     VehiculeModule,
     PersonnelModule,
+    StockModule,
+    FournisseurModule,
+    GazoileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
