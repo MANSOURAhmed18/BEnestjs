@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Fournisseur } from './schemas/fournisseur.schema';
+import { CreateFournisseurDto } from './dto/create-fournisseur.dto';
+import { UpdateFournisseurDto } from './dto/update-fournisseur.dto';
 
 @Injectable()
 export class FournisseurService {
@@ -9,7 +11,9 @@ export class FournisseurService {
     @InjectModel(Fournisseur.name) private fournisseurModel: Model<Fournisseur>,
   ) {}
 
-  async create(createFournisseurDto: any): Promise<Fournisseur> {
+  async create(
+    createFournisseurDto: CreateFournisseurDto,
+  ): Promise<Fournisseur> {
     const createdFournisseur = new this.fournisseurModel(createFournisseurDto);
     return createdFournisseur.save();
   }
@@ -24,7 +28,7 @@ export class FournisseurService {
 
   async update(
     id: string,
-    updateFournisseurDto: any,
+    updateFournisseurDto: UpdateFournisseurDto,
   ): Promise<Fournisseur | null> {
     return this.fournisseurModel
       .findByIdAndUpdate(id, updateFournisseurDto, { new: true })

@@ -8,13 +8,15 @@ import {
   Delete,
 } from '@nestjs/common';
 import { GazoileService } from './gazoile.service';
+import { CreateGazoileDto } from './dto/create-gazoile.dto';
+import { UpdateGazoileDto } from './dto/update-gazoile.dto';
 
 @Controller('gazoile')
 export class GazoileController {
   constructor(private readonly gazoileService: GazoileService) {}
 
   @Post()
-  create(@Body() createGazoileDto: any) {
+  create(@Body() createGazoileDto: CreateGazoileDto) {
     return this.gazoileService.create(createGazoileDto);
   }
 
@@ -29,7 +31,7 @@ export class GazoileController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateGazoileDto: any) {
+  update(@Param('id') id: string, @Body() updateGazoileDto: UpdateGazoileDto) {
     return this.gazoileService.update(id, updateGazoileDto);
   }
 

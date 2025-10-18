@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Gazoile } from './schemas/gazoile.schema';
+import { CreateGazoileDto } from './dto/create-gazoile.dto';
+import { UpdateGazoileDto } from './dto/update-gazoile.dto';
 
 @Injectable()
 export class GazoileService {
@@ -9,7 +11,7 @@ export class GazoileService {
     @InjectModel(Gazoile.name) private gazoileModel: Model<Gazoile>,
   ) {}
 
-  async create(createGazoileDto: any): Promise<Gazoile> {
+  async create(createGazoileDto: CreateGazoileDto): Promise<Gazoile> {
     const createdGazoile = new this.gazoileModel(createGazoileDto);
     // Pre-save hook will automatically calculate totalPrice
     return createdGazoile.save();
@@ -23,7 +25,10 @@ export class GazoileService {
     return this.gazoileModel.findById(id).exec();
   }
 
-  async update(id: string, updateGazoileDto: any): Promise<Gazoile | null> {
+  async update(
+    id: string,
+    updateGazoileDto: UpdateGazoileDto,
+  ): Promise<Gazoile | null> {
     // Fetch current document to get current values
     const currentGazoile = await this.gazoileModel.findById(id).exec();
     if (!currentGazoile) {
@@ -31,26 +36,22 @@ export class GazoileService {
     }
 
     // Calculate totalPrice if quantity or pricePerUnit is being updated
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const quantity =
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       updateGazoileDto.quantity !== undefined
-        ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          updateGazoileDto.quantity
+        ? updateGazoileDto.quantity
         : currentGazoile.quantity;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const pricePerUnit =
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       updateGazoileDto.pricePerUnit !== undefined
-        ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          updateGazoileDto.pricePerUnit
+        ? updateGazoileDto.pricePerUnit
         : currentGazoile.pricePerUnit;
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    updateGazoileDto.totalPrice = quantity * pricePerUnit;
+    const updateData = {
+      ...updateGazoileDto,
+      totalPrice: quantity * pricePerUnit,
+    };
 
     return this.gazoileModel
-      .findByIdAndUpdate(id, updateGazoileDto, { new: true })
+      .findByIdAndUpdate(id, updateData, { new: true })
       .exec();
   }
 
