@@ -16,6 +16,12 @@ export class Personnel extends Document {
   @Prop()
   cin: string;
 
+  @Prop({ required: false, min: 0 })
+  salary?: number;
+  
+  @Prop({ default: false })
+  isPayed: boolean;
+
   @Prop({ type: Types.ObjectId, ref: 'Chantier' })
   chantier: Chantier;
 }
